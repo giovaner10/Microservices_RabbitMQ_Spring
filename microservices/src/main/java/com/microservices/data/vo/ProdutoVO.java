@@ -1,4 +1,4 @@
-package com.microservices.entity;
+package com.microservices.data.vo;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.modelmapper.ModelMapper;
 
-import com.microservices.data.vo.ProdutoVO;
+import com.microservices.entity.Produto;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -18,20 +18,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Produto implements Serializable {
+public class ProdutoVO  {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6168690423241195980L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
@@ -43,10 +36,8 @@ public class Produto implements Serializable {
 	@NotBlank
 	private Double preco;
 	
-	
-	public static Produto create(ProdutoVO produtoVO) {
-		return new ModelMapper().map(produtoVO, Produto.class);
+	public static ProdutoVO create(Produto produto) {
+		return new ModelMapper().map(produto, ProdutoVO.class);
 	}
-	
 	
 }
