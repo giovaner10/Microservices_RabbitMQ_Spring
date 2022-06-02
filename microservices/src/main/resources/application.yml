@@ -17,6 +17,16 @@ spring:
   jmx:
     enabled: false
   datasource:
-    url: jdbc:mysql://localhost:3306/DataBaseMicro?createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/DataBaseProdutos?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password: 8718
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+crud:
+  rabbitmq:
+    exchange: crud.exchange
+    routingkey: crud.produto.routingkey

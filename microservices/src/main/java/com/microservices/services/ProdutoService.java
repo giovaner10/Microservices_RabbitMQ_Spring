@@ -1,6 +1,7 @@
 package com.microservices.services;
 
 import com.microservices.exceptions.BadRequestException;
+import com.microservices.message.ProdutoSendMessage;
 import org.springframework.stereotype.Service;
 
 import com.microservices.data.vo.ProdutoVO;
@@ -17,6 +18,8 @@ import java.util.stream.Collectors;
 public class ProdutoService {
 
     private ProdutoRepository produtoRepository;
+    private final ProdutoSendMessage produtoSendMessage;
+
 
     public ProdutoVO findById(Long id){
         if(!produtoRepository.existsById(id)){
@@ -28,6 +31,7 @@ public class ProdutoService {
 
     public ProdutoVO create(ProdutoVO produtoVO) {
         Produto salvoProduto = produtoRepository.save(Produto.create(produtoVO));
+        produtoSendMessage.sendMessage(ProdutoVO.create(salvoProduto));
         return ProdutoVO.create(salvoProduto);
     }
 

@@ -3,9 +3,11 @@ package com.pagamento.entity;
 import com.pagamento.data.VendaVO;
 import lombok.*;
 import org.modelmapper.ModelMapper;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,8 +26,9 @@ public class Venda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     @Column(name = "data", nullable = false)
-    private LocalDateTime data;
+    private Date data;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "venda", cascade = CascadeType.REFRESH)
     private List<ProdutoVenda> produtos;
