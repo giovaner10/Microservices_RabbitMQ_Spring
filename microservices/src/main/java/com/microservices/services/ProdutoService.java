@@ -4,7 +4,7 @@ import com.microservices.exceptions.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import com.microservices.data.vo.ProdutoVO;
-import com.microservices.entity.Produto;
+import com.microservices.controller.entity.Produto;
 import com.microservices.repository.ProdutoRepository;
 
 import lombok.AllArgsConstructor;

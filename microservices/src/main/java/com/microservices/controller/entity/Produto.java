@@ -1,4 +1,4 @@
-package com.microservices.entity;
+package com.microservices.controller.entity;
 
 import java.io.Serializable;
 
@@ -6,14 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-
-import org.modelmapper.ModelMapper;
 
 import com.microservices.data.vo.ProdutoVO;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,19 +29,17 @@ public class Produto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank
+
 	private String nome;
-	
-	@NotBlank
+
 	private Integer estoque;
 	
-	@NotBlank
-	private Double preco;
+
+	private double preco;
 	
 	
 	public static Produto create(ProdutoVO produtoVO) {
-		return new ModelMapper().map(produtoVO, Produto.class);
+		return new Produto(produtoVO.getId(), produtoVO.getNome(), produtoVO.getEstoque(), produtoVO.getPreco());
 	}
 	
 	
