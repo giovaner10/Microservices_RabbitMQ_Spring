@@ -19,3 +19,13 @@ spring:
     url: jdbc:mysql://localhost:3306/DataBaseVendas?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password: 8718
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+crud:
+  rabbitmq:
+    exchange: crud.exchange
+    queue: crud.produto.queue
