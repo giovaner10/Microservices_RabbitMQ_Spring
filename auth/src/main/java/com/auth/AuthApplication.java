@@ -1,0 +1,63 @@
+package com.auth;
+
+import java.util.Arrays;
+
+import com.auth.entity.Permission;
+import com.auth.entity.User;
+import com.auth.repository.PermissionRepository;
+import com.auth.repository.UserRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class AuthApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(AuthApplication.class, args);
+	}
+
+	@Bean
+	CommandLineRunner init(UserRepository userRepository, PermissionRepository permissionRepository,
+						   BCryptPasswordEncoder passwordEncoder) {
+		return args -> {
+			initUsers(userRepository, permissionRepository, passwordEncoder);
+		};
+
+	}
+
+	private void initUsers(UserRepository userRepository, PermissionRepository permissionRepository,
+						   BCryptPasswordEncoder passwordEncoder) {
+
+		Permission permission = null;
+		Permission findPermission = permissionRepository.findByDescription("Admin");
+		if (findPermission == null) {
+			permission = new Permission();
+			permission.setDescription("Admin");
+			permission = permissionRepository.save(permission);
+		} else {
+			permission = findPermission;
+		}
+
+		User admin = new User();
+		admin.setUserName("giovane");
+		admin.setAccountNonExpired(true);
+		admin.setAccountNonLocked(true);
+		admin.setCredentialsNonExpired(true);
+		admin.setEnabled(true);
+		admin.setPassword(passwordEncoder.encode("1234"));
+		admin.setPermissions(Arrays.asList(permission));
+
+		User find = userRepository.findByUserName("giovane");
+		if (find == null) {
+			userRepository.save(admin);
+		}
+	}
+
+}
