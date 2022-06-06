@@ -3,9 +3,8 @@ package com.auth.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.auth.jwt.JwtTokenProvider;
 import com.auth.repository.UserRepository;
-import com.auth.vo.UserVO;
+import com.auth.vo.UserV;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +26,7 @@ import static org.springframework.http.ResponseEntity.ok;
 public class AuthController {
 
 	private final AuthenticationManager authenticationManager;
-	private final JwtTokenProvider jwtTokenProvider;
+	private JwtTokenProvider jwtTokenProvider;
 	private final UserRepository userRepository;
 
 	@Autowired
@@ -45,7 +44,7 @@ public class AuthController {
 
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
-	public ResponseEntity<?> login(@RequestBody UserVO userVO) {
+	public ResponseEntity<?> login(@RequestBody UserV userVO) {
 		try {
 			var username = userVO.getUserName();
 			var password = userVO.getPassword();

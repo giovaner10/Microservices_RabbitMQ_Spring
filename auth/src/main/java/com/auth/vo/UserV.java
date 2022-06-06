@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class UserVO implements Serializable {
+public class UserV implements Serializable {
 
     private static final long serialVersionUID = -8387927312441830960L;
 

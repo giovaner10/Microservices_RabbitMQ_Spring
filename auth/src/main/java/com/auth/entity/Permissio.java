@@ -26,7 +26,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Permission implements GrantedAuthority, Serializable {
+public class Permissio implements GrantedAuthority, Serializable {
 
     private static final long serialVersionUID = -4460602054299804896L;
 

@@ -1,37 +1,33 @@
 server:
   port: 8080
 
-spring:
-  application:
-    name: gateway
 
 eureka:
   instance:
     hostname: localhost
   client:
+    fetchRegistry: true
+    registerWithEureka: true
     serviceUrl:
       defaultZone: http://localhost:8761/registry/eureka
 
-zuul:
-  prefix: /api
-  ignored-services: "*"
 
-  routes:
-    crud:
-      path: /crud/**
-      service-id: produtos
-      strip-prefix: false
-      custom-sensitive-headers: true
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
 
-    pagamento:
-      path: /pagamento/**
-      service-id: pagamento
-      strip-prefix: false
-      custom-sensitive-headers: true
-
-    auth:
-      path: /auth/**
-      service-id: auth
-      strip-prefix: false
-      custom-sensitive-headers: true
-
+        - id: pagamento
+          uri: lb://PAGAMENTO #http://localhost:8082 isso vai conectar de acordo com o nome do client, lb de load balance
+          predicates:
+            - Path=/pagamento/**
+        - id: crud
+          uri: lb://CRUD	#http://localhost:8081
+          predicates:
+              - Path=/crud/**
+  application:
+    name: API-GATEWAY-PORTEIRO

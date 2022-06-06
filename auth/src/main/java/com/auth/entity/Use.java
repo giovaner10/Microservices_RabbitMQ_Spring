@@ -34,7 +34,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class User implements UserDetails, Serializable{
+public class Use implements UserDetails, Serializable{
 
     private static final long serialVersionUID = -9020973236707102285L;
 
@@ -64,17 +64,17 @@ public class User implements UserDetails, Serializable{
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_permission" ,  joinColumns = { @JoinColumn(name="id_user")},
             inverseJoinColumns = { @JoinColumn(name="id_permissions")})
-    private List<Permission> permissions;
+    private List<Permissio> permissios;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.permissions;
+        return this.permissios;
     }
 
     public List<String> getRoles(){
         List<String> roles = new ArrayList<>();
-        this.permissions.stream()
+        this.permissios.stream()
                 .forEach( p -> {
                     roles.add(p.getDescription());
                 });

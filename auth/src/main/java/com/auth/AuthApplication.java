@@ -2,8 +2,9 @@ package com.auth;
 
 import java.util.Arrays;
 
-import com.auth.entity.Permission;
-import com.auth.entity.User;
+
+import com.auth.entity.Permissio;
+import com.auth.entity.Use;
 import com.auth.repository.PermissionRepository;
 import com.auth.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 
 
 @SpringBootApplication
@@ -24,10 +24,9 @@ public class AuthApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(UserRepository userRepository, PermissionRepository permissionRepository,
-						   BCryptPasswordEncoder passwordEncoder) {
+	CommandLineRunner init(BCryptPasswordEncoder encoder, UserRepository userRepository, PermissionRepository permissionRepository) {
 		return args -> {
-			initUsers(userRepository, permissionRepository, passwordEncoder);
+			initUsers(userRepository, permissionRepository, encoder);
 		};
 
 	}
@@ -35,26 +34,26 @@ public class AuthApplication {
 	private void initUsers(UserRepository userRepository, PermissionRepository permissionRepository,
 						   BCryptPasswordEncoder passwordEncoder) {
 
-		Permission permission = null;
-		Permission findPermission = permissionRepository.findByDescription("Admin");
+		Permissio permission = null;
+		Permissio findPermission = permissionRepository.findByDescription("Admin");
 		if (findPermission == null) {
-			permission = new Permission();
+			permission = new Permissio();
 			permission.setDescription("Admin");
 			permission = permissionRepository.save(permission);
 		} else {
 			permission = findPermission;
 		}
 
-		User admin = new User();
+		Use admin = new Use();
 		admin.setUserName("giovane");
 		admin.setAccountNonExpired(true);
 		admin.setAccountNonLocked(true);
 		admin.setCredentialsNonExpired(true);
 		admin.setEnabled(true);
 		admin.setPassword(passwordEncoder.encode("1234"));
-		admin.setPermissions(Arrays.asList(permission));
+		admin.setPermissios(Arrays.asList(permission));
 
-		User find = userRepository.findByUserName("giovane");
+		Use find = userRepository.findByUserName("giovane");
 		if (find == null) {
 			userRepository.save(admin);
 		}

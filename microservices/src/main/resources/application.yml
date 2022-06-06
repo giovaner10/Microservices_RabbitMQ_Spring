@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: produtos
+    name: crud
   jpa:
     show-sql: false
     hibernate:
